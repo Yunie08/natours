@@ -12,6 +12,7 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
+// GET ALL USERS
 exports.getAllUsers = catchAsync(async (req, res) => {
   const users = await User.find();
 
@@ -26,6 +27,7 @@ exports.getAllUsers = catchAsync(async (req, res) => {
   });
 });
 
+// UPDATE ME
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm) {
@@ -36,7 +38,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
       )
     );
   }
-
   // 2) Filtered out unwanted field names that are not allow to be updated
   const filteredBody = filterObj(req.body, 'name', 'email');
 
@@ -54,6 +55,17 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     data: {
       user: updatedUser,
     },
+  });
+});
+
+// DELETE ME
+// Not a good practice to just deactivate when user wants to delete their data. Will modify later !
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, { active: false });
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
   });
 });
 

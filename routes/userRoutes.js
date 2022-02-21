@@ -15,7 +15,10 @@ router.patch(
   authController.protect,
   authController.updatePassword
 );
+
 router.patch('/updateMe', authController.protect, userController.updateMe);
+// Would be better to use a common route /me for update and delete. Will implement later
+router.delete('/deleteMe', authController.protect, userController.deleteMe);
 
 router
   .route('/')

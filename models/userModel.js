@@ -66,6 +66,13 @@ userSchema.pre('save', function (next) {
   next();
 });
 
+userSchema.pre(/^find/, function (next) {
+  // 'this' points to current query
+  // we do not want to return inactive users
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 //------------ INSTANCE METHODS - Available on all Documents of a certain collections -----------------//
 
 // CHECK PASSWORD
