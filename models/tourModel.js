@@ -122,6 +122,14 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
+// Virtual populate
+//// .virtual('virtual field', {options object})
+tourSchema.virtual('reviews', {
+  ref: 'Review', // name of the model we want to reference
+  foreignField: 'tour', // name of the field in the referenced model
+  localField: '_id', // name of the field in the local model
+});
+
 // DOCUMENT PRE MIDDLEWARE: runs only before .save() and .create() but not for update()
 // 'this' is the document we want to save
 tourSchema.pre('save', function (next) {

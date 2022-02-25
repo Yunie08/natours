@@ -1,10 +1,14 @@
 const express = require('express');
 const tourController = require('../controllers/tourController');
 const authController = require('../controllers/authController');
+const reviewRouter = require('./reviewRoutes');
 
 // const checkbody = require('./../middleware/checkbody');
 
 const router = express.Router();
+
+// For this specific route, we use the reviewRouter
+router.use('/:tourId/reviews', reviewRouter);
 
 // Applied only when there is an id parameter in URL
 // router.param('id', tourController.checkId);
